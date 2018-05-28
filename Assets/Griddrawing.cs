@@ -8,7 +8,7 @@ public class Griddrawing : MonoBehaviour {
 	public GameObject vertiobj;
 	private LineRenderer horizonline;
 	private LineRenderer verticalline;
-	private const int maxgridnum = 32;
+	public int maxgridnum = 32;
 	public int horizongridnum =1 ;
 	public int verticalgridnum =1 ;
 	//will need to get map size from object ,but use this for temporary
@@ -16,6 +16,20 @@ public class Griddrawing : MonoBehaviour {
 	// Use this for initialization
 
 	void Start () {
+
+		if (horizongridnum > maxgridnum){
+			horizongridnum = maxgridnum;
+		}
+		if (verticalgridnum > maxgridnum){
+			verticalgridnum = maxgridnum;
+		}
+		if (horizongridnum < 2){
+			horizongridnum = 2;
+		}
+		if (verticalgridnum < 2){
+			verticalgridnum = 2;
+		}
+
 		horizonline = horiobj.GetComponent<LineRenderer>();
 		verticalline =  vertiobj.GetComponent<LineRenderer>();
 		int horigriduse =(horizongridnum*2)-1;
@@ -84,10 +98,6 @@ public class Griddrawing : MonoBehaviour {
 					 }
 			}	
 		}
-
-
-      
-
 
         horizonline.positionCount = horipositions.Length;
 		verticalline.positionCount = vertipositions.Length;
