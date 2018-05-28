@@ -18,6 +18,5 @@ public class NewBehaviourScript : MonoBehaviour {
     {
         Vector3 target = destination.transform.position - origin.transform.position;
         line.GetComponent<LineRenderer>().SetPosition(1 , origin.transform.position);
-
     }
 }
