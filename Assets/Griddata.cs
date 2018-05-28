@@ -17,6 +17,7 @@ public struct Gridinfo
 public class Griddata : MonoBehaviour {
 
 public GameObject grid;
+public Camera camera;
 
 private Gridinfo[,] mapinfo;
 Griddrawing gridnumdata;
@@ -51,8 +52,8 @@ public Text data;
 	
 	// Update is called once per frame
 	void Update () {
- 		Vector3 mousePosworld = - Vector3.one ;
-		Plane plane = new Plane( new Vector3(0.0f,-1.0f,0.0f),new Vector3(0.0f,0.0f,0.0f));
+        Vector3 mousePosworld = - Vector3.one ;
+		Plane plane = new Plane( new Vector3(0.0f,0.0f,-1.0f),new Vector3(0.0f,0.0f,0.0f));
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		float disttoplane;
 		if (plane.Raycast (ray, out disttoplane))
@@ -62,7 +63,7 @@ public Text data;
 
 		if (Input.GetMouseButtonDown(0)){
 			int blockx = (int)(mousePosworld.x * ((float)gridnumdata.horizongridnum/gridnumdata.maxgridnum));
-			int blocky = (int)(mousePosworld.z * ((float)gridnumdata.verticalgridnum/gridnumdata.maxgridnum)); 
+			int blocky = (int)(mousePosworld.y * ((float)gridnumdata.verticalgridnum/gridnumdata.maxgridnum)); 
 
 			data.text = "("+blockx+","+blocky+") : "+mapinfo[blockx,blocky].intensity;
 		}

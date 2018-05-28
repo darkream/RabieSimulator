@@ -60,17 +60,17 @@ public class Griddrawing : MonoBehaviour {
  			//positions[0] is 0 0 0
 			if(i % 2 != 0) //  draw _ line  left to right
 			{
-			 horipositions[i] = new Vector3 (horipositions[i-1].x+(float)HorizontalGridSize , 0.0f ,horipositions[i-1].z   );
+			 horipositions[i] = new Vector3 (horipositions[i-1].x+(float)HorizontalGridSize , horipositions[i-1].y , 0.0f  );
 			}
 			 if(i % 2 == 0) //  draw | line 
 			{
 					 if((i/2) % 2 != 0) // down to top
 					{
-						horipositions[i] = new Vector3 (horipositions[i-1].x , 0.0f,horipositions[i-1].z + (float)mapsize ); //should be hiegh map size
+						horipositions[i] = new Vector3 (horipositions[i-1].x , horipositions[i-1].y + (float)mapsize, 0.0f ); //should be hiegh map size
 					}
 					 else if((i/2) % 2 == 0)// top to down
 					 {
-						horipositions[i] = new Vector3 (horipositions[i-1].x , 0.0f,horipositions[i-1].z -(float)mapsize );//should be width map size
+						horipositions[i] = new Vector3 (horipositions[i-1].x , horipositions[i-1].y -(float)mapsize,0.0f );//should be width map size
 					 }
 			}	
 		}
@@ -84,17 +84,17 @@ public class Griddrawing : MonoBehaviour {
  			//positions[0] is 0 0 0
 			if(i % 2 != 0) //  draw | line down to top
 			{
-			 vertipositions[i] = new Vector3 (vertipositions[i-1].x , 0.0f ,vertipositions[i-1].z+(float)VerticalGridSize   );
+			 vertipositions[i] = new Vector3 (vertipositions[i-1].x , vertipositions[i-1].y+(float)VerticalGridSize,0.0f   );
 			}
 			 if(i % 2 == 0) //  draw _ line 
 			{
 					 if((i/2) % 2 != 0) // left to right
 					{
-						vertipositions[i] = new Vector3 (vertipositions[i-1].x + (float)mapsize, 0.0f,vertipositions[i-1].z  ); //should be hiegh map size
+						vertipositions[i] = new Vector3 (vertipositions[i-1].x + (float)mapsize, vertipositions[i-1].y,0.0f  ); //should be hiegh map size
 					}
 					 else if((i/2) % 2 == 0)// right to left
 					 {
-						vertipositions[i] = new Vector3 (vertipositions[i-1].x- (float)mapsize , 0.0f,vertipositions[i-1].z  );//should be width map size
+						vertipositions[i] = new Vector3 (vertipositions[i-1].x- (float)mapsize , vertipositions[i-1].y,0.0f  );//should be width map size
 					 }
 			}	
 		}
