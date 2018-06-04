@@ -9,14 +9,13 @@ public class Griddrawing : MonoBehaviour {
 	private LineRenderer horizonline;
 	private LineRenderer verticalline;
 	public int maxgridnum = 32;
-	public int horizongridnum =1 ;
-	public int verticalgridnum =1 ;
+	public int horizongridnum;
+	public int verticalgridnum;
 	//will need to get map size from object ,but use this for temporary
 	private const double mapsize = 32;
 	// Use this for initialization
 
 	void Start () {
-
 		if (horizongridnum > maxgridnum){
 			horizongridnum = maxgridnum;
 		}
@@ -60,7 +59,7 @@ public class Griddrawing : MonoBehaviour {
  			//positions[0] is 0 0 0
 			if(i % 2 != 0) //  draw _ line  left to right
 			{
-			 horipositions[i] = new Vector3 (horipositions[i-1].x+(float)HorizontalGridSize , horipositions[i-1].y , 0.0f  );
+				horipositions[i] = new Vector3 (horipositions[i-1].x+(float)HorizontalGridSize , horipositions[i-1].y , 0.0f  );
 			}
 			 if(i % 2 == 0) //  draw | line 
 			{
