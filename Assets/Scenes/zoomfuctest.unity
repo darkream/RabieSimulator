@@ -398,7 +398,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blocks: {fileID: 871551443}
   grid: {fileID: 1266825530}
-  gridmap: {fileID: 1266825533}
 --- !u!4 &721497017
 Transform:
   m_ObjectHideFlags: 0
@@ -1009,6 +1008,64 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!1 &1821584086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1821584088}
+  - component: {fileID: 1821584087}
+  - component: {fileID: 1821584089}
+  m_Layer: 0
+  m_Name: Zoomanddragfunc
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1821584087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1821584086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e680a8fdf3959144bb96102c3aff5f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoomSpeed: 3
+  targetOrtho: 0
+  smoothSpeed: 10
+  minOrtho: 1
+  maxOrtho: 20
+--- !u!4 &1821584088
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1821584086}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.281387, y: 18.791891, z: -3.2649138}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1821584089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1821584086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d58148024d3e0409408403b1f24525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panSpeed: 20
 --- !u!1 &2088242745
 GameObject:
   m_ObjectHideFlags: 0
