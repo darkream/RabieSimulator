@@ -31,8 +31,10 @@ public class Griddata : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0)){
 			int blockx = (int)(mousePosworld.x * ((float)gridnumdata.horizongridnum/gridnumdata.maxgridnum));
 			int blocky = (int)(mousePosworld.y * ((float)gridnumdata.verticalgridnum/gridnumdata.maxgridnum)); 
-
+			if(blockx >=0 && blockx<=32 && blocky >=0 && blocky<=32)
+			{
 			data.text = "("+blockx+","+blocky+") : "+intensity[blockx,blocky];
+			}
 		}
 
 		//data.text = "x : " +   mousePosworld.x +  " Z : " + mousePosworld.z;
