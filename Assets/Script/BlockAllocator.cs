@@ -27,11 +27,11 @@ public class BlockAllocator : MonoBehaviour {
 
 		for (int i = 0 ; i < ysize ; i ++){
 			for (int j = 0 ; j < xsize ; j ++){
-				Debug.Log(griddata.intensity[j,i]);
+				float textureScaling = 0.1f + (0.9f * (griddata.intensity[j,i] / 100.0f));
 				//int thisintensity = griddata.mapinfo[j,i].intensity;
 				blocks.transform.GetChild((i*xsize)+j).position = new Vector3(((float)maxsize / xsize) * j,((float)maxsize / ysize) * i,0.0f);
 				blocks.transform.GetChild((i*xsize)+j).localScale = new Vector3(5.0f / xsize, 5.0f / ysize,1.0f);
-				blockcolor = new Color(255.0f,255.0f,255.0f,128.0f);
+				blockcolor = new Color(textureScaling,textureScaling,textureScaling,textureScaling) ;
 				blocks.transform.GetChild((i*xsize)+j).GetComponent<SpriteRenderer>().color = blockcolor;
 			}
 		}

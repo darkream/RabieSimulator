@@ -11,6 +11,7 @@ public class Griddata : MonoBehaviour {
 
 	public int[,] incline = new int[32,32];
 	public int[,] intensity = new int[32,32];
+	
 	// Use this for initialization
 	void Start () {
 		gridnumdata = grid.GetComponent<Griddrawing>();
