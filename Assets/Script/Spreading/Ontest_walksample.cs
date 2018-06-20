@@ -73,12 +73,12 @@ public Text data;
 
 		float sumdognum=0;
 		for(int i=0;i<4;i++)
-		 {
-			 for (int j=0;j<4;j++)
-			 {
-				 sumdognum+=dog_num[i,j];
-			 }
-		 }
+		{
+			for (int j=0;j<4;j++)
+			{
+				sumdognum+=dog_num[i,j];
+			}
+		}
 
 
 
@@ -90,75 +90,100 @@ public Text data;
 		{
 		 	mousePosworld = ray.GetPoint (disttoplane);
 		}
-			int blockx = (int)(mousePosworld.x * ((float)1/2));
-			int blocky = (int)(mousePosworld.y* ((float)1/2)); 
+		int blockx = (int)(mousePosworld.x * ((float)1/2));
+		int blocky = (int)(mousePosworld.y* ((float)1/2)); 
 			
-			if(blockx >=0 && blockx<32 && blocky >=0 && blocky<32)
-			{
+		if(blockx >=0 && blockx<32 && blocky >=0 && blocky<32)
+		{
 			data.text = "("+blockx+","+blocky+") : "+dog_num[blockx,blocky] +" : " + sumdognum;
-			}
+		}
 		
 		if (Input.GetMouseButtonDown(0)){ //update sample time frame
 		    //
-				float all_prob=0;
+			float all_prob=0;
 			for(int i=0;i<32;i++)
-		 {
-			 for (int j=0;j<32;j++)
-			 {
-				if(dog_num[i,j]>0) //walk
+		 	{
+				for (int j=0;j<32;j++)
 			 	{
+					if(dog_num[i,j]>0) //walk
+			 		{
 					//calculate prob
 					//dogprob is 3*3 so hacked
 					//cal all prob
 
-					if (i==0||j==0)
-					{
-						if(i==0&&j!=0)
+						if (i==0||j==0)
 						{
+<<<<<<< HEAD
 							cal_prob[0,0] =dog_prob[0,0] * area_prob[i,j-1];
 							cal_prob[1,0] =dog_prob[1,0] * area_prob[i,j-1];
 							cal_prob[2,0] =dog_prob[2,0] * area_prob[i+1,j-1];
 							cal_prob[0,1] =dog_prob[0,1] * area_prob[i,j];
 							cal_prob[0,2] =dog_prob[0,2] * area_prob[i,j+1];
+=======
+							if(i==0&&j!=0)
+							{
+								cal_prob[0,0] =0.0f;
+								cal_prob[1,0] =dog_prob[1,0] * area_prob[i,j-1];
+								cal_prob[2,0] =dog_prob[2,0] * area_prob[i+1,j-1];
+								cal_prob[0,1] =0.0f;
+								cal_prob[0,2] =0.0f;
+							}
+							else if(j==0&&i!=0)
+							{
+								cal_prob[0,0] =0.0f;
+								cal_prob[1,0] =0.0f;
+								cal_prob[2,0] =0.0f;
+								cal_prob[0,1] =dog_prob[0,1] * area_prob[i-1,j];
+								cal_prob[0,2] =dog_prob[0,2] * area_prob[i-1,j+1];
+							}
+							else if(j==0&&i==0)
+							{
+								cal_prob[0,0] =0.0f;
+								cal_prob[1,0] =0.0f;
+								cal_prob[2,0] =0.0f;
+								cal_prob[0,1] =0.0f;
+								cal_prob[0,2] =0.0f;
+							}
+>>>>>>> 1be3affdc253351cf494d03a2602a52a6a47af28
 						}
-						else if(j==0&&i!=0)
+						else
 						{
+<<<<<<< HEAD
 							cal_prob[0,0] =dog_prob[0,0]* area_prob[i-1,j];
 							cal_prob[1,0] =dog_prob[1,0]* area_prob[i,j];
 							cal_prob[2,0] =dog_prob[2,0]* area_prob[i+1,j];
 							cal_prob[0,1] =dog_prob[0,1] * area_prob[i-1,j];
 							cal_prob[0,2] =dog_prob[0,2] * area_prob[i-1,j+1];
+=======
+								cal_prob[0,0] =dog_prob[0,0] * area_prob[i-1,j-1];
+								cal_prob[1,0] =dog_prob[1,0] * area_prob[i,j-1];
+								cal_prob[2,0] =dog_prob[2,0] * area_prob[i+1,j-1];
+								cal_prob[0,1] =dog_prob[0,1] * area_prob[i-1,j];
+								cal_prob[0,2] =dog_prob[0,2] * area_prob[i-1,j+1];
+>>>>>>> 1be3affdc253351cf494d03a2602a52a6a47af28
 						}
-						else if(j==0&&i==0)
+						cal_prob[1,1]=dog_prob[1,1] * area_prob[i,j];
+						cal_prob[1,2]=dog_prob[1,2] * area_prob[i,j+1];
+						cal_prob[2,1]=dog_prob[2,1] * area_prob[i+1,j];
+						cal_prob[2,2]=dog_prob[2,2] * area_prob[i+1,j+1];
+
+						for(int a=0;a<3;a++)
 						{
+<<<<<<< HEAD
 							cal_prob[0,0] =dog_prob[0,0]* area_prob[i,j];
 							cal_prob[1,0] =dog_prob[1,0]* area_prob[i,j];
 							cal_prob[2,0] =dog_prob[2,0]* area_prob[i+1,j];
 							cal_prob[0,1] =dog_prob[0,1]* area_prob[i,j];
 							cal_prob[0,2] =dog_prob[0,2]* area_prob[i,j+1];
+=======
+							for(int b=0;b<3;b++)
+								all_prob +=cal_prob[a,b] ;
+>>>>>>> 1be3affdc253351cf494d03a2602a52a6a47af28
 						}
-					}
-					else
-					{
-							cal_prob[0,0] =dog_prob[0,0] * area_prob[i-1,j-1];
-							cal_prob[1,0] =dog_prob[1,0]* area_prob[i,j-1];
-							cal_prob[2,0] =dog_prob[2,0]* area_prob[i+1,j-1];
-							cal_prob[0,1] =dog_prob[0,1]* area_prob[i-1,j];
-							cal_prob[0,2] =dog_prob[0,2]* area_prob[i-1,j+1];
-					}
-					cal_prob[1,1]=dog_prob[1,1] * area_prob[i,j];
-					cal_prob[1,2]=dog_prob[1,2] * area_prob[i,j+1];
-					cal_prob[2,1]=dog_prob[2,1] * area_prob[i+1,j];
-					cal_prob[2,2]=dog_prob[2,2] * area_prob[i+1,j+1];
-
-					for(int a=0;a<3;a++)
-					{
-						for(int b=0;b<3;b++)
-						all_prob +=cal_prob[a,b] ;
-					}
 					
 				
 
+<<<<<<< HEAD
 					//assign dog
 					new_dog_num [i,j] +=dog_num[i,j];
 
@@ -207,20 +232,47 @@ public Text data;
 					
 					
 
+=======
+						//assign dog
+						new_dog_num [i,j] +=dog_num[i,j];
+						if(i>1)
+						{
+							new_dog_num [i-1,j] += dog_num[i,j]*cal_prob[0,1]/all_prob   ; //midleft
+							new_dog_num [i,j] -=dog_num[i,j]*cal_prob[0,1]/all_prob   ;
+							new_dog_num [i-1,j+1] += dog_num[i,j]*cal_prob[0,2]/all_prob   ; //topleft
+							new_dog_num [i,j] -=dog_num[i,j]*cal_prob[0,2]/all_prob   ;
+						}
+						if(j>1)
+						{
+							new_dog_num [i,j-1] += dog_num[i,j]*cal_prob[1,0]/all_prob   ; //downmid
+							new_dog_num [i,j] -=dog_num[i,j]*cal_prob[1,0]/all_prob   ;
+							new_dog_num [i+1,j-1] += dog_num[i,j]*cal_prob[2,0]/all_prob   ;//downright
+							new_dog_num [i,j] -=dog_num[i,j]*cal_prob[2,0]/all_prob   ;
+						}
+						if(i>1&&j>1)
+						{
+							new_dog_num [i-1,j-1] += dog_num[i,j]*cal_prob[0,0]/all_prob   ;
+							new_dog_num [i,j] -=dog_num[i,j]*cal_prob[0,0]/all_prob   ;
+						}
+>>>>>>> 1be3affdc253351cf494d03a2602a52a6a47af28
 					
-				}
-			 }
-		 }
-
-
+						new_dog_num [i,j+1] += dog_num[i,j]*cal_prob[1,2]/all_prob   ;
+						new_dog_num [i,j] -=dog_num[i,j]*cal_prob[1,2]/all_prob   ;
+						new_dog_num [i+1,j] += dog_num[i,j]*cal_prob[2,1]/all_prob   ;
+						new_dog_num [i,j] -=dog_num[i,j]*cal_prob[2,1]/all_prob   ;
+						new_dog_num [i+1,j+1] += dog_num[i,j]*cal_prob[2,2]/all_prob   ;
+						new_dog_num [i,j] -=dog_num[i,j]*cal_prob[2,2]/all_prob   ;
+					}
+			 	}
+		 	}
 			for(int i=0;i<32;i++)
-		 {
-			 for (int j=0;j<32;j++)
-			 {
-				dog_num [i,j]=new_dog_num [i,j];
-				new_dog_num [i,j] = 0.0f;
-			 }
-		 }
+			{
+				for (int j=0;j<32;j++)
+				{
+					dog_num [i,j]=new_dog_num [i,j];
+					new_dog_num [i,j] = 0.0f;
+				}
+			}
 
 		}
 	}
