@@ -53,8 +53,8 @@ public Text data;
 		dog_prob[0,1]=1;
 		dog_prob[0,2]=1;
 		dog_prob[1,0]=1;
-		dog_prob[1,1]=0.5f;
-		dog_prob[1,2]=2;
+		dog_prob[1,1]=1f;
+		dog_prob[1,2]=1;
 		dog_prob[2,0]=1;
 		dog_prob[2,1]=1;
 		dog_prob[2,2]=1;
@@ -112,7 +112,8 @@ public Text data;
 					//cal all prob
 
 						if (i==0||j==0)
-						{
+						
+
 							if(i==0&&j!=0)
 							{
 								cal_prob[0,0] =0.0f;
@@ -137,6 +138,7 @@ public Text data;
 								cal_prob[0,1] =0.0f;
 								cal_prob[0,2] =0.0f;
 							}
+
 						}
 						else
 						{
@@ -153,12 +155,12 @@ public Text data;
 
 						for(int a=0;a<3;a++)
 						{
+
 							for(int b=0;b<3;b++)
 								all_prob +=cal_prob[a,b] ;
 						}
 					
 				
-
 						//assign dog
 						new_dog_num [i,j] +=dog_num[i,j];
 						if(i>1)
@@ -201,4 +203,4 @@ public Text data;
 
 		}
 	}
-}
+	
