@@ -5,10 +5,10 @@ using UnityEngine;
 public class Mapdrag : MonoBehaviour {
 
 	  // Update is called once per frame
-      public float panSpeed = 2.0f;
- bool bDragging=false;
- Vector3 oldPos = new Vector3(0.0f,0.0f,0.0f);
- Vector3 panOrigin= new Vector3(0.0f,0.0f,0.0f);
+    public float panSpeed = 2.0f;
+    private bool bDragging=false;
+    Vector3 oldPos = new Vector3(0.0f,0.0f,0.0f);
+    Vector3 panOrigin= new Vector3(0.0f,0.0f,0.0f);
 
       void Update() {
            if(Input.GetMouseButtonDown(0))
