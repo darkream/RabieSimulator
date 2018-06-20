@@ -7,7 +7,8 @@ public class Griddata : MonoBehaviour {
 
 	public GameObject grid;
 	public Griddrawing gridnumdata;	
-	public Text data;
+	public Text lowertext;
+	public Text uppertext;
 
 	public int[,] incline = new int[32,32];
 	public int[,] intensity = new int[32,32];
@@ -57,7 +58,7 @@ public class Griddata : MonoBehaviour {
 			int blocky = (int)(mousePosworld.y * ((float)gridnumdata.verticalgridnum/gridnumdata.maxgridnum)); 
 			if(blockx >=0 && blockx<=32 && blocky >=0 && blocky<=32)
 			{
-				data.text = "("+blockx+","+blocky+") : i="+intensity[blockx,blocky];
+				lowertext.text = "("+blockx+","+blocky+") : i="+intensity[blockx,blocky];
 			}
 			return true;
 		}
@@ -82,5 +83,23 @@ public class Griddata : MonoBehaviour {
 		int[] coord = {blockx, blocky};
 
 		return coord;
+	}
+
+	public void mouseHoverToMap(){
+		Vector3 mousePosworld = - Vector3.one ;
+		Plane plane = new Plane( new Vector3(0.0f,0.0f,-1.0f),new Vector3(0.0f,0.0f,0.0f));
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		float disttoplane;
+		if (plane.Raycast (ray, out disttoplane))
+		{
+		 	mousePosworld = ray.GetPoint (disttoplane);
+		}
+		int blockx = (int)(mousePosworld.x * ((float)1/2));
+		int blocky = (int)(mousePosworld.y* ((float)1/2)); 
+			
+		if(blockx >=0 && blockx<32 && blocky >=0 && blocky<32)
+		{
+			uppertext.text = "("+blockx+","+blocky+") : ";
+		}
 	}
 }

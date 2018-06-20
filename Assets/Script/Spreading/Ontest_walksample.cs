@@ -80,8 +80,7 @@ public Text data;
 			}
 		}
 
-
-
+		/* 
 		Vector3 mousePosworld = - Vector3.one ;
 		Plane plane = new Plane( new Vector3(0.0f,0.0f,-1.0f),new Vector3(0.0f,0.0f,0.0f));
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -95,9 +94,10 @@ public Text data;
 			
 		if(blockx >=0 && blockx<32 && blocky >=0 && blocky<32)
 		{
-			data.text = "("+blockx+","+blocky+") : "+dog_num[blockx,blocky] +" : " + sumdognum;
+			data.text = "("+blockx+","+blocky+") : ";
 		}
-		
+		*/
+
 		if (Input.GetMouseButtonDown(0)){ //update sample time frame
 		    //
 			float all_prob=0;

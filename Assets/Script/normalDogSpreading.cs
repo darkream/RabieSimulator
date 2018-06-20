@@ -11,8 +11,9 @@ public class normalDogSpreading : MonoBehaviour {
 	private Griddrawing gridmap;
 	public List<int> allocationx, allocationy;
 	public List<float> doggroup;
-	public float hordesizeperblock;
+	public float hordeSizePerBlock;
 	private float runtime = 0.0f;
+	private int initialgroupsize;
 
 	// Use this for initialization
 	void Start () {
@@ -37,7 +38,13 @@ public class normalDogSpreading : MonoBehaviour {
 		xsize = gridmap.horizongridnum;
 		maxsize = gridmap.maxgridnum;
 		
-		for (int groupid = 0 ; groupid < doggroup.Count ; groupid++){
+		initialgroupsize = doggroup.Count;
+
+		if (hordeSizePerBlock < 1.0f){
+			hordeSizePerBlock = 1.0f;
+		}
+
+		for (int groupid = 0 ; groupid < initialgroupsize ; groupid++){
 			dogs.transform.GetChild(groupid).position = blockAllocator.blocks.transform.GetChild((allocationy[groupid]*xsize)+allocationx[groupid]).position;
 			dogs.transform.GetChild(groupid).localScale = blockAllocator.blocks.transform.GetChild((allocationy[groupid]*xsize)+allocationx[groupid]).localScale;
 		}
@@ -57,13 +64,13 @@ public class normalDogSpreading : MonoBehaviour {
 			bool y_match = (allocationy[groupid] == coord[1]);
 
 			if (x_match && y_match){
-				griddata.data.text += "\nDog amount: " + doggroup[groupid];
+				griddata.lowertext.text += "\nDog amount: " + doggroup[groupid];
 				found = true;
 			}
 		}
 
 		if (click && !found){
-			griddata.data.text += "\nNo dog exist";
+			griddata.lowertext.text += "\nNo dog exist";
 		}
 	}
 
@@ -73,13 +80,13 @@ public class normalDogSpreading : MonoBehaviour {
 			int[] loc = {allocationx[groupid], allocationy[groupid] + 1, allocationx[groupid], allocationy[groupid] - 1,
 					allocationx[groupid] - 1, allocationy[groupid], allocationx[groupid] + 1, allocationy[groupid]};
 			
-			float separationsize = doggroup[groupid] / (1.0f + ((loc.Length / 2)*hordesizeperblock));
+			float separationsize = doggroup[groupid] / (1.0f + ((loc.Length / 2)*hordeSizePerBlock));
 			int pickedid = -1;
 			for (int i = 0 ; i < loc.Length / 2 ; i++){
 				int currentx = loc[2*i];
 				int currenty = loc[(2*i)+1];
 				if (outOfBoundChecking(currentx, currenty)){
-					separationsize *= getIntensityReduction(currentx, currenty);
+					//separationsize *= getIntensityReduction(currentx, currenty);
 					if (separationsize > 0.5f){
 						pickedid = dogEncounter(currentx,currenty);
 						if(pickedid == -1){
