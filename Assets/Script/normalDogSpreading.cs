@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class normalDogSpreading : MonoBehaviour {
+	const int SINGLE = 0;
+	const int HORDE = 1;
+	const int EXPLORE = 2;
+	const int FLEE = 3;
+	public BlockAllocator blockallocator;
 	public GameObject dogs;
-	public GameObject grid;
-	public BlockAllocator blockAllocator;
-	private int xsize, ysize, maxsize;
-	private Griddata griddata;
+	public float groupsize;
+	public List<int> locx, locy;
+	private List<int> role, groupid;
+	public int[,] dogamount;
 	private Griddrawing gridmap;
-	public List<int> allocationx, allocationy;
-	public List<float> doggroup;
-	public float hordeSizePerBlock;
-	private float runtime = 0.0f;
-	private int initialgroupsize;
-
+	private int xsize, ysize, maxsize;
+	private int[] coord;
 	// Use this for initialization
 	void Start () {
 		normalDogInitiation();
@@ -22,112 +23,91 @@ public class normalDogSpreading : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		clickDogDisplay();
-		runtime += Time.deltaTime;
-		if (runtime > 1.0f){
-			runtime = 0.0f;
-			dogWalk();
+		if (Input.GetKeyDown("x")){
+			dogMove();
+		}
+		if (blockallocator.griddata.mouseTriggerToMap()){
+			coord = blockallocator.griddata.getMouseTriggerToMap();
+			blockallocator.griddata.lowertext.text = "#Dog: " + dogamount[coord[0],coord[1]];
 		}
 	}
 
-	void normalDogInitiation(){
-		blockAllocator.blockAllocatorInitialization();
-		gridmap = grid.GetComponent<Griddrawing>();
-		griddata = grid.GetComponent<Griddata>();
+	public void normalDogInitiation(){
+		blockallocator.blockAllocatorInitialization();
+		gridmap = blockallocator.grid.GetComponent<Griddrawing>();
+
+		assignInitialDogToMap();
+	}
+
+	void assignInitialDogToMap(){
 		ysize = gridmap.verticalgridnum;
 		xsize = gridmap.horizongridnum;
-		maxsize = gridmap.maxgridnum;
-		
-		initialgroupsize = doggroup.Count;
+		dogamount = new int[xsize,ysize];
 
-		if (hordeSizePerBlock < 1.0f){
-			hordeSizePerBlock = 1.0f;
-		}
-
-		for (int groupid = 0 ; groupid < initialgroupsize ; groupid++){
-			dogs.transform.GetChild(groupid).position = blockAllocator.blocks.transform.GetChild((allocationy[groupid]*xsize)+allocationx[groupid]).position;
-			dogs.transform.GetChild(groupid).localScale = blockAllocator.blocks.transform.GetChild((allocationy[groupid]*xsize)+allocationx[groupid]).localScale;
-		}
-	}
-
-	void clickDogDisplay(){
-		bool click = griddata.mouseTriggerToMap();
-		int[] coord = {-1,-1};
-		if (click){
-			coord = griddata.getMouseTriggerToMap();
-		}
-
-		bool found = false;
-
-		for (int groupid = 0 ; groupid < doggroup.Count ; groupid++){
-			bool x_match = (allocationx[groupid] == coord[0]);
-			bool y_match = (allocationy[groupid] == coord[1]);
-
-			if (x_match && y_match){
-				griddata.lowertext.text += "\nDog amount: " + doggroup[groupid];
-				found = true;
+		//Initialize dogamount
+		for (int y = 0 ; y < ysize ; y++){
+			for (int x = 0 ; x < xsize ; x++){
+				dogamount[x,y] = 0;
 			}
 		}
 
-		if (click && !found){
-			griddata.lowertext.text += "\nNo dog exist";
+		//Initialize role and add amount
+		role = new List<int>();
+		for (int i = 0 ; i < locx.Count ; i++){
+			role.Add(SINGLE);
+			dogamount[locx[i], locy[i]] += 1;
+			dogs.transform.GetChild(i).position = blockallocator.blocks.transform.GetChild((locy[i]*xsize)+locx[i]).position;
+			dogs.transform.GetChild(i).localScale = blockallocator.blocks.transform.GetChild((locy[i]*xsize)+locx[i]).localScale;
 		}
+
+		//Initialize group and connection
+		groupid = new List<int>();
+		//still does nothing in here
 	}
 
-	void dogWalk(){
-		int thisSizeOnly = doggroup.Count;
-		for (int groupid = 0 ; groupid < thisSizeOnly ; groupid++){
-			int[] loc = {allocationx[groupid], allocationy[groupid] + 1, allocationx[groupid], allocationy[groupid] - 1,
-					allocationx[groupid] - 1, allocationy[groupid], allocationx[groupid] + 1, allocationy[groupid]};
-			
-			float separationsize = doggroup[groupid] / (1.0f + ((loc.Length / 2)*hordeSizePerBlock));
-			int pickedid = -1;
-			for (int i = 0 ; i < loc.Length / 2 ; i++){
-				int currentx = loc[2*i];
-				int currenty = loc[(2*i)+1];
-				if (outOfBoundChecking(currentx, currenty)){
-					//separationsize *= getIntensityReduction(currentx, currenty);
-					if (separationsize > 0.5f){
-						pickedid = dogEncounter(currentx,currenty);
-						if(pickedid == -1){
-							addNewDog(currentx, currenty, separationsize);
-							dogs.transform.GetChild(doggroup.Count - 1).position = blockAllocator.blocks.transform.GetChild((currenty*xsize)+currentx).position;
-							dogs.transform.GetChild(doggroup.Count - 1).localScale = blockAllocator.blocks.transform.GetChild((currenty*xsize)+currentx).localScale;
-						}
-						else {
-							addToExistedDog(pickedid, separationsize);
-						}
-						doggroup[groupid] -= separationsize;
-					}
+	void dogMove(){
+		for (int i = 0 ; i < role.Count ; i++){
+			int[] possloc = {locx[i] + 1, locy[i], locx[i] - 1, locy[i], //left or right
+							locx[i], locy[i] + 1, locx[i], locy[i] - 1, //up or down
+							locx[i], locy[i]}; //no movement
+
+			List<float> chances = new List<float>();
+			List<int> selectedx = new List<int>();
+			List<int> selectedy = new List<int>();
+			for (int alloc = 0 ; alloc < possloc.Length / 2 ; alloc++){
+				int dirx = possloc[2*alloc];
+				int diry = possloc[(2*alloc) + 1];
+				if (dirx >= 0 && diry >= 0 && dirx < xsize && diry < ysize){
+					float thischance = 100.0f;
+					thischance *= (100.0f - blockallocator.griddata.intensity[dirx, diry]);
+					chances.Add(thischance);
+					selectedx.Add(dirx);
+					selectedy.Add(diry);
 				}
 			}
+			int selectedpath = primitiveRandomMovement(chances);
+			dogamount[locx[i], locy[i]]--;
+			if (dogamount[locx[i], locy[i]] == 0){
+				dogs.transform.GetChild(i).position = blockallocator.blocks.transform.GetChild((selectedy[selectedpath] * xsize)+ selectedx[selectedpath]).position;
+			}
+			locx[i] = selectedx[selectedpath];
+			locy[i] = selectedy[selectedpath];
+			dogamount[locx[i], locy[i]]++;
 		}
 	}
 
-	int dogEncounter(int x, int y){
-		for (int groupid = 0 ; groupid < doggroup.Count ; groupid++){
-			if (allocationx[groupid] == x && allocationy[groupid] == y){
-				return groupid;
-			}
+	int primitiveRandomMovement(List<float> chances){
+		float maxchances = 0.0f;
+		for (int i = 0 ; i < chances.Count ; i++){
+			maxchances += chances[i];
+		}
+		float selectedChance = Random.Range(0.0f, maxchances);
+		
+		for (int i = 0 ; i < chances.Count ; i++){
+			selectedChance -= chances[i];
+			if (selectedChance < 0)
+				return i;
 		}
 		return -1;
-	}
-
-	void addNewDog(int locx, int locy, float dogamount){
-		doggroup.Add(dogamount);
-		allocationx.Add(locx);
-		allocationy.Add(locy);
-	}
-
-	void addToExistedDog(int dogid, float dogamount){
-		doggroup[dogid] += dogamount;
-	}
-
-	float getIntensityReduction(int locx, int locy){
-		return 1.0f - (griddata.intensity[locx,locy] / 100.0f);
-	}
-
-	bool outOfBoundChecking(int locx, int locy){
-		return (locx >= 0 && locy >= 0 && locx < gridmap.horizongridnum && locy < gridmap.verticalgridnum);
 	}
 }
