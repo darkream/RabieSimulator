@@ -12,7 +12,7 @@ public class DrawCircle : DrawShape
     public Color FillColor = Color.white;
 
     private MeshFilter _meshFilter;
-    private Rigidbody2D _rigidbody2D;
+   // private Rigidbody2D _rigidbody2D;
     private CircleCollider2D _circleCollider2D;
     private LineRenderer _lineRenderer;
 
@@ -31,18 +31,18 @@ public class DrawCircle : DrawShape
         get { return _simulating; }
         set {
             _simulating = value;
-            _rigidbody2D.bodyType = value ? RigidbodyType2D.Dynamic : RigidbodyType2D.Static;
+        //    _rigidbody2D.bodyType = value ? RigidbodyType2D.Dynamic : RigidbodyType2D.Static;
         }
     }
 
     private void Awake()
     {
         _meshFilter = GetComponent<MeshFilter>();
-        _rigidbody2D = GetComponent<Rigidbody2D>();
+    //    _rigidbody2D = GetComponent<Rigidbody2D>();
         _circleCollider2D = GetComponent<CircleCollider2D>();
         _lineRenderer = GetComponent<LineRenderer>();
 
-        _rigidbody2D.useAutoMass = true;
+   //     _rigidbody2D.useAutoMass = true;
     }
 
     public override void AddVertex(Vector2 vertex)
