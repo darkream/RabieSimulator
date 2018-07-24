@@ -40,7 +40,7 @@ public class Samplezeromapgrid : MonoBehaviour {
 				chance[i,j] = 0;
 				}
 
-				if(i>20||j>20)
+				if(i>=20||j>=20)
 				{
 				chance[i,j] = 0;
 				}
@@ -69,7 +69,7 @@ public class Samplezeromapgrid : MonoBehaviour {
 				{
 				chance[i,j] = 0;
 				}
-				if(i>20||j>20)
+				if(i>=20||j>=20)
 				{
 				chance[i,j] = 0;
 				}
@@ -77,6 +77,7 @@ public class Samplezeromapgrid : MonoBehaviour {
 		}
 	//map size 20*20
 	chance[0,0] = 100;
+	chance[1,1] = 100;
 	chance[10,10] = 50;
 	chance[20,20] = 100;
 	}

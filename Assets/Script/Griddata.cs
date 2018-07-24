@@ -102,4 +102,8 @@ public class Griddata : MonoBehaviour {
 			uppertext.text = "("+blockx+","+blocky+") : ";
 		}
 	}
+
+	
+
+	
 }
