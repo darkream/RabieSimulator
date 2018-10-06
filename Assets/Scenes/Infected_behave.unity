@@ -453,6 +453,7 @@ GameObject:
   - component: {fileID: 701836193}
   - component: {fileID: 701836192}
   - component: {fileID: 701836194}
+  - component: {fileID: 701836195}
   m_Layer: 0
   m_Name: Infected dog
   m_TagString: Untagged
@@ -531,14 +532,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   posx: 0
   posy: 0
-  range: 4
+  fighting: 0
+  range: 5
   detectrange: 8
   grid: {fileID: 1266825530}
   griddata: {fileID: 1266825533}
   mapdata: {fileID: 1266825532}
   blockallo: {fileID: 721497016}
-  dogstate: 1
+  dogstate: 2
+  group: 0
   otherdog: {fileID: 1671141022}
+--- !u!114 &701836195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 701836191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead4ed2a4b98baa4c96a458590fa13b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisdog: {fileID: 701836191}
 --- !u!1 &721497015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,6 +1079,7 @@ GameObject:
   - component: {fileID: 1671141025}
   - component: {fileID: 1671141024}
   - component: {fileID: 1671141023}
+  - component: {fileID: 1671141026}
   m_Layer: 0
   m_Name: normal dog
   m_TagString: Untagged
@@ -1082,15 +1098,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ea832458955114bb1839a7fd097540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posx: 2
-  posy: 2
-  range: 3
-  detectrange: 8
+  posx: 5
+  posy: 5
+  fighting: 0
+  range: 1
+  detectrange: 1
   grid: {fileID: 1266825530}
   griddata: {fileID: 1266825533}
   mapdata: {fileID: 1266825532}
   blockallo: {fileID: 721497016}
   dogstate: 0
+  group: 0
   otherdog: {fileID: 701836191}
 --- !u!212 &1671141024
 SpriteRenderer:
@@ -1127,8 +1145,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 56c84504cb8917c42ae011f3fa3f6bb8, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c932692731dc3404a90eead27cfcf24c, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1145,11 +1163,23 @@ Transform:
   m_GameObject: {fileID: 1671141022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 32.69, y: 0.35, z: 0}
-  m_LocalScale: {x: 0.3374988, y: 0.3874993, z: 1}
+  m_LocalScale: {x: 0.09679577, y: 0.11113607, z: 0.28680328}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1671141026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1671141022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead4ed2a4b98baa4c96a458590fa13b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisdog: {fileID: 1671141022}
 --- !u!1 &1702404341
 GameObject:
   m_ObjectHideFlags: 0
